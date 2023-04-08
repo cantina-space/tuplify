@@ -1,7 +1,5 @@
 #![warn(missing_docs)]
-//! Generic heterogeneous array manipulation.
-//!
-//! This library attempts to mitigate the lack of variadic generics in rust
+//! Generic heterogeneous list manipulation.
 //!
 //! Most of the available features are documented in the [`hlist`] module
 
