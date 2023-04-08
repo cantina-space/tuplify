@@ -1,6 +1,6 @@
 [package]
 name = "tuplify"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 authors = ["Alois Masanell <massou@cantina.space>"]
 description = "Generic hlist/tuple library"
@@ -11,3 +11,4 @@ license = "BSD-3-Clause"
 categories = ["Rust patterns"]
 homepage = "https://github.com/cantina-space/tuplify"
 documentation = "https://docs.rs/tuplify"
+repository = "https://github.com/cantina-space/tuplify"
