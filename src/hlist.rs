@@ -14,7 +14,7 @@ pub trait HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(hcons![].len(), 0);
     /// assert_eq!(hcons![1].len(), 1);
     /// assert_eq!(hcons![1, true, "hello"].len(), 3);
@@ -23,7 +23,7 @@ pub trait HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(().len(), 0);
     /// assert_eq!((1,).len(), 1);
     /// assert_eq!((1, true, "hello").len(), 3);
@@ -37,7 +37,7 @@ pub trait HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert!(hcons![].is_empty());
     /// assert!(!hcons![1].is_empty());
     /// ```
@@ -45,7 +45,7 @@ pub trait HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert!(().is_empty());
     /// assert!(!(1,).is_empty());
     /// ```
@@ -68,7 +68,7 @@ pub trait AsRefs<'a>: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     ///
     /// assert_eq!(list.as_refs(), hcons![&0, &'1', &"2"]);
@@ -78,7 +78,7 @@ pub trait AsRefs<'a>: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     ///
     /// assert_eq!(list.as_refs(), (&0, &'1', &"2"));
@@ -86,7 +86,7 @@ pub trait AsRefs<'a>: HList {
     /// ```
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// fn need_refs(s: &str, s2: &str) {
     ///     //...
     /// }
@@ -112,7 +112,7 @@ pub trait AsMuts<'a>: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let mut list = hcons![0, '1', "2"];
     ///
     /// assert_eq!(list.as_muts(), hcons![&mut 0, &mut '1', &mut "2"]);
@@ -122,7 +122,7 @@ pub trait AsMuts<'a>: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let mut list = (0, '1', "2");
     ///
     /// assert_eq!(list.as_muts(), (&mut 0, &mut '1', &mut "2"));
@@ -147,7 +147,7 @@ pub trait Extend<Other: HList>: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     /// let list = list.extend(hcons![4.0, 5i8, 6u8]);
     ///
@@ -156,7 +156,7 @@ pub trait Extend<Other: HList>: HList {
     /// does not work with single elements
     ///
     /// ```compile_fail
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"].extend(10);
     ///
     /// assert_eq!(list, (0, '1', "2", 10));
@@ -165,7 +165,7 @@ pub trait Extend<Other: HList>: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     /// let list = list.extend((4.0, 5i8, 6u8));
     ///
@@ -173,7 +173,7 @@ pub trait Extend<Other: HList>: HList {
     /// ```
     ///
     /// ```compile_fail
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2").extend(10);
     ///
     /// assert_eq!(list, (0, '1', "2", 10));
@@ -187,14 +187,14 @@ pub trait Extend<Other: HList>: HList {
     /// ### [`crate::Tuple`] to [`crate::hcons::HCons`]
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2").extend(HEmpty);
     ///
     /// assert_eq!(list, hcons![0, '1', "2"]);
     /// ```
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2").extend(hcons![0, 1, 2]);
     ///
     /// assert_eq!(list, hcons![0, '1', "2", 0, 1, 2]);
@@ -203,13 +203,13 @@ pub trait Extend<Other: HList>: HList {
     /// ### [`crate::hcons::HCons`] to [`crate::Tuple`]
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"].extend(());
     ///
     /// assert_eq!(list, (0, '1', "2"));
     /// ```
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"].extend((0, 1, 2));
     ///
     /// assert_eq!(list, (0, '1', "2", 0, 1, 2));
@@ -228,7 +228,7 @@ pub trait Fun<T: HList>: FunMut<T> {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     /// let value = 3u8;
     /// let func = |x: i32, y: char, z: &str| format!("{x} {y} {z} {value}");
@@ -240,7 +240,7 @@ pub trait Fun<T: HList>: FunMut<T> {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     /// let value = 3u8;
     /// let func = |x: i32, y: char, z: &str| format!("{x} {y} {z} {value}");
@@ -251,7 +251,7 @@ pub trait Fun<T: HList>: FunMut<T> {
     ///
     /// with fns
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// fn le_fun() -> i32 { 42 }
     /// assert_eq!(42, le_fun.call_fun(()));
     /// fn more_fun(x: &str) -> String { format!("{x} 42") }
@@ -275,7 +275,7 @@ pub trait FunMut<T: HList>: FunOnce<T> {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     /// let mut value = String::new();
     /// let mut func = |x: i32, y: char, z: &str| value = format!("{x} {y} {z}");
@@ -287,7 +287,7 @@ pub trait FunMut<T: HList>: FunOnce<T> {
     /// Also works on functions taking no arguments:
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let mut value = String::new();
     /// let mut func = || value = "hello".to_string();
     ///
@@ -298,7 +298,7 @@ pub trait FunMut<T: HList>: FunOnce<T> {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     /// let mut value = String::new();
     /// let mut func = |x: i32, y: char, z: &str| value = format!("{x} {y} {z}");
@@ -310,7 +310,7 @@ pub trait FunMut<T: HList>: FunOnce<T> {
     /// On a function taking no arguments:
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let mut value = String::new();
     /// let mut func = || value = "hello".to_string();
     ///
@@ -334,7 +334,7 @@ pub trait FunOnce<T: HList> {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     /// let value = "hello".to_string();
     /// let func = |x: i32, y: char, z: &str| format!("{x} {y} {z}");
@@ -345,7 +345,7 @@ pub trait FunOnce<T: HList> {
     /// Also works on functions taking no arguments:
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let value = "hello".to_string();
     ///
     /// assert_eq!(&{ move || value }.call_fun_once(HEmpty), "hello");
@@ -354,7 +354,7 @@ pub trait FunOnce<T: HList> {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     /// let value = "hello".to_string();
     /// let func = move |x: i32, y: char, z: &str| format!("{value} {x} {y} {z}");
@@ -365,7 +365,7 @@ pub trait FunOnce<T: HList> {
     /// On a function taking no arguments:
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let value = "hello".to_string();
     /// assert_eq!(&{ move || value }.call_fun_once(()), "hello");
     /// ```
@@ -384,7 +384,7 @@ pub trait IntoOpts: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     ///
     /// assert_eq!(list.into_opts(), hcons![Some(0), Some('1'), Some("2")]);
@@ -394,7 +394,7 @@ pub trait IntoOpts: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     ///
     /// assert_eq!(list.into_opts(), (Some(0), Some('1'), Some("2")));
@@ -417,7 +417,7 @@ pub trait PushFront<E>: HList {
     /// ## With `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons!['1', "2"].push_front(0);
     ///
     /// assert_eq!(list, hcons![0, '1', "2"]);
@@ -426,19 +426,19 @@ pub trait PushFront<E>: HList {
     /// ## With tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ('1', "2").push_front(0);
     ///
     /// assert_eq!(list, (0, '1', "2"));
     /// ```
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ('1', "2").push_front((0, 1));
     ///
     /// assert_eq!(list, ((0, 1), '1', "2"));
     /// ```
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ().push_front(1);
     ///
     /// assert_eq!(list, (1,));
@@ -460,7 +460,7 @@ pub trait PushBack<E>: HList {
     /// ## With `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons!['1', "2"].push_back(0);
     ///
     /// assert_eq!(list, hcons!['1', "2", 0]);
@@ -469,19 +469,19 @@ pub trait PushBack<E>: HList {
     /// ## With tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ('1', "2").push_back(0);
     ///
     /// assert_eq!(list, ('1', "2", 0));
     /// ```
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ('1', "2").push_back((0, 1));
     ///
     /// assert_eq!(list, ('1', "2", (0, 1)));
     /// ```
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = ().push_back(1);
     ///
     /// assert_eq!(list, (1,));
@@ -501,7 +501,7 @@ pub trait Reverse: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(hcons![].rev(), hcons![]);
     /// assert_eq!(hcons![1].rev(), hcons![1]);
     /// assert_eq!(hcons![0, '1', "2"].rev(), hcons!["2", '1', 0]);
@@ -510,7 +510,7 @@ pub trait Reverse: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(().rev(), ());
     /// assert_eq!((1,).rev(), (1,));
     /// assert_eq!((0, '1', "2").rev(), ("2", '1', 0));
@@ -532,14 +532,14 @@ pub trait TryUncons: HList + Sized {
     /// # Examples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     ///
     /// assert_eq!(Ok((0, hcons!['1', "2"])), hcons![0, '1', "2"].try_uncons());
     /// assert_eq!(Ok((0, ('1', "2"))), (0, '1', "2").try_uncons());
     /// ```
     /// [`TryUncons::try_uncons`] works with empty lists
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(Err(()), ().try_uncons());
     /// assert_eq!(Err(hcons![]), hcons![].try_uncons());
     /// ```
@@ -564,7 +564,7 @@ pub trait TryValidateOpt: HList + Sized {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = hcons![Some(0), Some('1'), Some("2")].try_validate();
     /// let bar = hcons![Some(0), Option::<char>::None, Some("2")].try_validate();
     ///
@@ -574,7 +574,7 @@ pub trait TryValidateOpt: HList + Sized {
     /// 
     /// ## On tuples
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = (Some(0), Some('1'), Some("2")).try_validate();
     /// let bar = (Some(0), Option::<char>::None, Some("2")).try_validate();
     ///
@@ -601,7 +601,7 @@ pub trait TryValidateRes: HList + Sized {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = hcons![
     ///     Result::<_, i8>::Ok(0),
     ///     Result::<_, u32>::Ok('1'),
@@ -622,7 +622,7 @@ pub trait TryValidateRes: HList + Sized {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo =
     ///     (Result::<_, i8>::Ok(0), Result::<_, u32>::Ok('1'), Result::<_, f64>::Ok("2"))
     ///         .try_validate();
@@ -651,7 +651,7 @@ pub trait Uncons: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let (head, tail) = hcons![0, '1', "2"].uncons();
     ///
     /// assert_eq!(head, 0);
@@ -661,7 +661,7 @@ pub trait Uncons: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let (head, tail) = (0, '1', "2").uncons();
     ///
     /// assert_eq!(head, 0);
@@ -669,7 +669,7 @@ pub trait Uncons: HList {
     /// ```
     /// [`Uncons::uncons`] not work with empty lists
     /// ```compile_fail
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = ().uncons();
     /// let foo = hcons![].uncons();
     /// ```
@@ -677,7 +677,7 @@ pub trait Uncons: HList {
     ///
     /// If the list contains 1 element, then the tail is empty
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!((10, HEmpty), hcons![10].uncons());
     /// assert_eq!((10, ()), (10,).uncons());
     /// ```
@@ -693,7 +693,7 @@ pub trait UnconsExt: Uncons {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     ///
     /// assert_eq!(list.into_head(), 0);
@@ -702,7 +702,7 @@ pub trait UnconsExt: Uncons {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     ///
     /// assert_eq!(list.into_head(), 0);
@@ -716,7 +716,7 @@ pub trait UnconsExt: Uncons {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = hcons![0, '1', "2"];
     ///
     /// assert_eq!(list.into_tail(), hcons!['1', "2"]);
@@ -725,7 +725,7 @@ pub trait UnconsExt: Uncons {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let list = (0, '1', "2");
     ///
     /// assert_eq!(list.into_tail(), ('1', "2"));
@@ -744,14 +744,14 @@ pub trait UnconsOpt: HList {
     type Tail: HList;
 
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     ///
     /// assert_eq!(Some((0, hcons!['1', "2"])), hcons![0, '1', "2"].uncons_opt());
     /// assert_eq!(Some((0, ('1', "2"))), (0, '1', "2").uncons_opt());
     /// ```
     /// [`UnconsOpt::uncons_opt`] works with empty lists
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// assert_eq!(None, ().uncons_opt());
     /// assert_eq!(None, hcons![].uncons_opt());
     /// ```
@@ -772,7 +772,7 @@ pub trait Unpack: HList {
     /// if the list does not contain one element, returns `Self`.
     /// Example:
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     ///
     /// fn do_something<T: Unpack>(t: T) -> Option<T::Output> { Some(t.unpack()) }
     ///
@@ -805,7 +805,7 @@ pub trait ValidateOpt: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = hcons![Some(0), Some('1'), Some("2")].validate();
     /// let bar = hcons![Some(0), Option::<char>::None, Some("2")].validate();
     ///
@@ -816,7 +816,7 @@ pub trait ValidateOpt: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo = (Some(0), Some('1'), Some("2")).validate();
     /// let bar = (Some(0), Option::<char>::None, Some("2")).validate();
     ///
@@ -846,7 +846,7 @@ pub trait ValidateRes<E>: HList {
     /// ## On `HCons`
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo: Result<_, ()> = hcons![Ok(0), Ok('1'), Ok("2")].validate();
     /// let bar = hcons![Ok(0), Result::<char, _>::Err("bad"), Ok("2")].validate();
     ///
@@ -857,7 +857,7 @@ pub trait ValidateRes<E>: HList {
     /// ## On tuples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let foo: Result<_, ()> = (Ok(0), Ok('1'), Ok("2")).validate();
     /// let bar = (Ok(0), Result::<char, _>::Err("bad"), Ok("2")).validate();
     ///
@@ -865,6 +865,129 @@ pub trait ValidateRes<E>: HList {
     /// assert_eq!(bar, Err("bad"));
     /// ```
     fn validate(self) -> Result<Self::Output, E>;
+}
+
+/// Removes the element at the back of the list
+pub trait PopBack {
+    /// Last element of the list
+    type Back;
+    /// Elements of the list without the last one
+    type Front: HList;
+
+    /// removes the last element of the list
+    ///
+    /// returns the last element of the list and the remaining list
+    ///
+    /// Example:
+    /// ```
+    /// use tuplify::*;
+    ///
+    /// assert_eq!((1, 2, 3).pop_back(), (3, (1, 2)));
+    /// assert_eq!(hcons!(1, 2, 3).pop_back(), (3, hcons!(1, 2)));
+    /// assert_eq!((1, 2).pop_back(), (2, (1,)));
+    /// assert_eq!(hcons!(1, 2).pop_back(), (2, hcons!(1)));
+    /// assert_eq!((1,).pop_back(), (1, ()));
+    /// assert_eq!(hcons!(1).pop_back(), (1, HEmpty));
+    /// ```
+    ///
+    /// Does not work on emty lists
+    ///
+    /// ```compile_fail
+    /// use tuplify::*;
+    ///
+    /// assert_eq!(().pop_back(), ());
+    /// assert_eq!(hcons!().pop_back(), (HEmpty, HEmpty));
+    /// ```
+    fn pop_back(self) -> (Self::Back, Self::Front);
+}
+
+/// Removes the element at the back of the list
+pub trait TryPopBack {
+    /// Last element of the list
+    type Back;
+    /// Elements of the list without the last one
+    type Front: HList;
+
+    /// removes the last element of the list
+    ///
+    /// returns the last element of the list and the remaining list, None if empty
+    ///
+    /// Example:
+    /// ```
+    /// use tuplify::*;
+    ///
+    /// assert_eq!((1, 2, 3).try_pop_back(), Some((3, (1, 2))));
+    /// assert_eq!(hcons!(1, 2, 3).try_pop_back(), Some((3, hcons!(1, 2))));
+    /// assert_eq!((1, 2).try_pop_back(), Some((2, (1,))));
+    /// assert_eq!(hcons!(1, 2).try_pop_back(), Some((2, hcons!(1))));
+    /// assert_eq!((1,).try_pop_back(), Some((1, ())));
+    /// assert_eq!(hcons!(1).try_pop_back(), Some((1, HEmpty)));
+    /// ```
+    ///
+    /// Works on emty lists
+    ///
+    /// ```
+    /// use tuplify::*;
+    ///
+    /// assert_eq!(().try_pop_back(), None);
+    /// assert_eq!(hcons!().try_pop_back(), None);
+    /// ```
+    fn try_pop_back(self) -> Option<(Self::Back, Self::Front)>;
+}
+
+/// Removes the element at the back of the list
+pub trait PopBackExt {
+    /// Last element of the list
+    type Back;
+    /// Elements of the list without the last one
+    type Front: HList;
+
+    /// transforms self into the last element
+    ///
+    /// Example:
+    /// ```
+    /// use tuplify::*;
+    ///
+    /// assert_eq!((1, 2, 3).into_back(), 3);
+    /// assert_eq!(hcons!(1, 2, 3).into_back(), 3);
+    /// assert_eq!((1, 2).into_back(), 2);
+    /// assert_eq!(hcons!(1, 2).into_back(), 2);
+    /// assert_eq!((1,).into_back(), 1);
+    /// assert_eq!(hcons!(1).into_back(), 1);
+    /// ```
+    ///
+    /// Does not work on emty lists
+    ///
+    /// ```compile_fail
+    /// use tuplify::*;
+    ///
+    /// assert_eq!(().into_back(), ());
+    /// assert_eq!(hcons!().into_back(), (HEmpty, HEmpty));
+    /// ```
+    fn into_back(self) -> Self::Back;
+    /// transforms self into a list without the last element
+    ///
+    /// Example:
+    /// ```
+    /// use tuplify::*;
+    ///
+    /// assert_eq!((1, 2, 3).into_heads(), (1, 2));
+    /// assert_eq!(hcons!(1, 2, 3).into_heads(), hcons!(1, 2));
+    /// assert_eq!((1, 2).into_heads(), (1,));
+    /// assert_eq!(hcons!(1, 2).into_heads(), hcons!(1));
+    /// assert_eq!((1,).into_heads(), ());
+    /// assert_eq!(hcons!(1).into_heads(), HEmpty);
+    /// ```
+    ///
+    /// Does not work on emty lists
+    ///
+    /// ```compile_fail
+    /// use tuplify::*;
+    ///
+    /// assert_eq!(().into_heads(), ());
+    /// assert_eq!(hcons!().into_heads(), (HEmpty, HEmpty));
+    /// ```
+    fn into_heads(self) -> Self::Front;
 }
 
 /// a type that can never be instantiated
@@ -1087,4 +1210,42 @@ where
             _ => Err(tail.push_front(head)),
         }
     }
+}
+
+impl<L> PopBack for L
+where
+    L: Reverse,
+    L::Output: Uncons,
+    <L::Output as Uncons>::Tail: Reverse,
+    <<L::Output as Uncons>::Tail as Reverse>::Output: HList,
+{
+    type Back = <L::Output as Uncons>::Head;
+    type Front = <<L::Output as Uncons>::Tail as Reverse>::Output;
+
+    fn pop_back(self) -> (Self::Back, Self::Front) {
+        let (b, h) = self.rev().uncons();
+        (b, h.rev())
+    }
+}
+
+impl<L> TryPopBack for L
+where
+    L: PopBack,
+{
+    type Back = L::Back;
+    type Front = L::Front;
+
+    fn try_pop_back(self) -> Option<(Self::Back, Self::Front)> { Some(self.pop_back()) }
+}
+
+impl<L> PopBackExt for L
+where
+    L: PopBack,
+{
+    type Back = L::Back;
+    type Front = L::Front;
+
+    fn into_back(self) -> Self::Back { self.pop_back().0 }
+
+    fn into_heads(self) -> Self::Front { self.pop_back().1 }
 }

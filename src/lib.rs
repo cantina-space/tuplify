@@ -1,11 +1,11 @@
 #![warn(missing_docs)]
-//! Generic heterogeneous list manipulation.
-//!
-//! Most of the available features are documented in the [`hlist`] module
+#![doc = include_str!("../readme.md")]
 
-pub mod hcons;
-pub mod hlist;
-pub mod tuple;
+mod hcons;
+mod hlist;
+mod tuple;
+
+pub use self::{hcons::*, hlist::*, tuple::*};
 
 /// crate seal of approval
 pub(crate) mod seal {
@@ -32,7 +32,7 @@ impl<T: seal::Tuple> Tuple for T {}
 /// # Examples
 ///
 /// ```
-/// # use tuplify::*;
+/// use tuplify::*;
 /// assert_eq!(count_tokens![a b c], 3);
 /// assert_eq!(count_tokens![], 0);
 /// ```

@@ -17,15 +17,15 @@ pub struct HCons<H, T>(pub H, pub T);
 /// # Examples
 ///
 /// ```
-/// # use tuplify::{HCons, hcons};
+/// use tuplify::{hcons, HCons};
 /// let empty: HCons![] = hcons![];
 /// let hcons: HCons![Option<()>, bool, u8] = hcons![None, false, 0];
 /// ```
 #[macro_export]
 macro_rules! HCons {
-    () => { $crate::hcons::HEmpty };
-    ($head:ty $(,) *) => { $crate::hcons::HCons<$head, $crate::hcons::HEmpty> };
-    ($head:ty, $($tail:ty), * $(,) *) => { $crate::hcons::HCons<$head, $crate::HCons!($($tail), *)> };
+    () => { $crate::HEmpty };
+    ($head:ty $(,) *) => { $crate::HCons<$head, $crate::HEmpty> };
+    ($head:ty, $($tail:ty), * $(,) *) => { $crate::HCons<$head, $crate::HCons!($($tail), *)> };
 }
 
 /// Constructs an [`HCons`] value.
@@ -33,15 +33,15 @@ macro_rules! HCons {
 /// # Examples
 ///
 /// ```
-/// # use tuplify::{hcons, hcons::*};
+/// use tuplify::*;
 /// assert_eq!(hcons![], HEmpty);
 /// assert_eq!(hcons![Some(4), false, 0], HCons(Some(4), HCons(false, HCons(0, HEmpty))));
 /// ```
 #[macro_export]
 macro_rules! hcons {
-    () => { $crate::hcons::HEmpty };
-    ($head:expr $(,) *) => { $crate::hcons::HCons($head, $crate::hcons::HEmpty) };
-    ($head:expr, $($tail:expr), * $(,) *) => { $crate::hcons::HCons($head,  $crate::hcons!($($tail), *)) };
+    () => { $crate::HEmpty };
+    ($head:expr $(,) *) => { $crate::HCons($head, $crate::HEmpty) };
+    ($head:expr, $($tail:expr), * $(,) *) => { $crate::HCons($head,  $crate::hcons!($($tail), *)) };
 }
 
 /// Constructs a pattern matching [`HCons`] values.
@@ -49,14 +49,14 @@ macro_rules! hcons {
 /// # Examples
 ///
 /// ```
-/// # use tuplify::{hcons, hcons_pat};
+/// use tuplify::*;
 /// let hcons_pat![(a, b), (c, d)] = hcons![(1, 2), (3, 4)];
 /// assert_eq!((a, b, c, d), (1, 2, 3, 4));
 /// ```
 #[macro_export]
 macro_rules! hcons_pat {
-    ($head:pat $(,) *) => { $crate::hcons::HCons($head, $crate::hcons::HEmpty) };
-    ($head:pat, $($tail:pat), * $(,) *) => { $crate::hcons::HCons($head, $crate::hcons_pat!($($tail),*)) };
+    ($head:pat $(,) *) => { $crate::HCons($head, $crate::HEmpty) };
+    ($head:pat, $($tail:pat), * $(,) *) => { $crate::HCons($head, $crate::hcons_pat!($($tail),*)) };
 }
 
 /// Trait for converting a heterogeneous list into a [`HCons`] list.
@@ -71,21 +71,21 @@ pub trait IntoHCons {
     /// # Examples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = (0, '1', "2").into_hcons();
     ///
     /// assert_eq!(ls, hcons![0, '1', "2"]);
     /// ```
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = ().into_hcons();
     ///
     /// assert_eq!(ls, hcons![]);
     /// ```
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = (12,).into_hcons();
     ///
     /// assert_eq!(ls, hcons![12]);
@@ -213,6 +213,13 @@ impl TryValidateRes for HEmpty {
     type Output = HEmpty;
 
     fn try_validate(self) -> Result<Self::Output, Self> { Ok(HEmpty) }
+}
+
+impl TryPopBack for HEmpty {
+    type Back = Never;
+    type Front = NeverList;
+
+    fn try_pop_back(self) -> Option<(Self::Back, Self::Front)> { None }
 }
 
 impl<H, T, F> Fun<HCons<H, T>> for F

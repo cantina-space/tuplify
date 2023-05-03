@@ -16,21 +16,21 @@ pub trait IntoTuple {
     /// # Examples
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = hcons![0, '1', "2"].into_tuple();
     ///
     /// assert_eq!(ls, (0, '1', "2"));
     /// ```
     ///
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = hcons![].into_tuple();
     ///
     /// assert_eq!(ls, ());
     /// ```
     ///  
     /// ```
-    /// # use tuplify::{*, hlist::*, hcons::*, tuple::*};
+    /// use tuplify::*;
     /// let ls = hcons![42].into_tuple();
     ///
     /// assert_eq!(ls, (42,));
@@ -141,6 +141,13 @@ impl TryValidateRes for () {
     type Output = ();
 
     fn try_validate(self) -> Result<Self::Output, Self> { Ok(()) }
+}
+
+impl TryPopBack for () {
+    type Back = Never;
+    type Front = NeverList;
+
+    fn try_pop_back(self) -> Option<(Self::Back, Self::Front)> { None }
 }
 
 // Everything else is generated for tuples up to a certain fixed length
