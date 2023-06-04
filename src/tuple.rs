@@ -154,7 +154,7 @@ impl TryPopBack for () {
 macro_rules! gen_tuple_hlist {
     () => {};
     ($head:ident $($tail:ident)*) => {
-        gen_tuple_hlist!($($tail)*);
+        gen_tuple_hlist!($($tail) *);
 
         impl<$head, $($tail,) *> crate::seal::Tuple for ($head, $($tail,) *) {}
 

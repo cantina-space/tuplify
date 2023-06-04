@@ -1,10 +1,15 @@
 #![warn(missing_docs)]
 #![doc = include_str!("../readme.md")]
 
+#[cfg(feature = "visitor")]
+mod visitor;
+
 mod hcons;
 mod hlist;
 mod tuple;
 
+#[cfg(feature = "visitor")]
+pub use self::visitor::*;
 pub use self::{hcons::*, hlist::*, tuple::*};
 
 /// crate seal of approval

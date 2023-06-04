@@ -12,3 +12,10 @@ categories = ["rust-patterns", "data-structures"]
 homepage = "https://github.com/cantina-space/tuplify"
 documentation = "https://docs.rs/tuplify"
 repository = "https://github.com/cantina-space/tuplify"
+
+[features]
+default = ["visitor"]
+visitor = ["dep:paste"]
+
+[dependencies]
+paste = { version = "1.0", optional = true }
